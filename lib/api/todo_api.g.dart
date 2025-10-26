@@ -105,7 +105,7 @@ class _TodoApi implements TodoApi {
     )
         .compose(
           _dio.options,
-          '/todos',
+          '/todos/create',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -142,7 +142,7 @@ class _TodoApi implements TodoApi {
     )
         .compose(
           _dio.options,
-          '/todos/${id}',
+          '/todos/update/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -175,7 +175,7 @@ class _TodoApi implements TodoApi {
     )
         .compose(
           _dio.options,
-          '/todos/${id}',
+          '/todos/delete/${id}',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../api/todo_api.dart';
 import 'auth_service.dart';
 import 'auth_interceptor.dart';
+import 'storage_service.dart';
 
 class DIContainer {
   static DIContainer? _instance;
@@ -9,16 +10,16 @@ class DIContainer {
 
   DIContainer._();
 
-  // late final SharedPreferences _prefs;
+  late final StorageService _storage;
   late final AuthService _authService;
   late final Dio _dio;
   late final TodoApi _todoApi;
 
   Future<void> init() async {
-    // _prefs = await SharedPreferences.getInstance();
-    _authService = AuthService(
-        // _prefs
-        );
+    _storage = StorageService();
+    await _storage.init();
+    
+    _authService = AuthService(_storage);
 
     _dio = Dio();
     _dio.interceptors.add(AuthInterceptor(_authService));
@@ -26,6 +27,7 @@ class DIContainer {
     _todoApi = TodoApi(_dio);
   }
 
+  StorageService get storage => _storage;
   AuthService get authService => _authService;
   TodoApi get todoApi => _todoApi;
 }

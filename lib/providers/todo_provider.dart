@@ -41,7 +41,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> toggleTodo(Todo todo) async {
     try {
       final updated = todo.copyWith(isCompleted: !todo.isCompleted);
-      await _api.updateTodo(todo.id!, updated);
+      await _api.updateTodo(todo.id ?? '', updated);
 
       final index = _todos.indexWhere((t) => t.id == todo.id);
       if (index != -1) {
@@ -55,7 +55,7 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> deleteTodo(Todo todo) async {
     try {
-      await _api.deleteTodo(todo.id!);
+      await _api.deleteTodo(todo.id ?? '');
       _todos.removeWhere((t) => t.id == todo.id);
       notifyListeners();
     } catch (e) {

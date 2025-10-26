@@ -9,11 +9,8 @@ class AuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Якщо користувач авторизований, додаємо X-User-ID header
-    // if (authService.isAuthenticated) {
-    if (true) {
-      options.headers['X-User-ID'] =
-          '0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c';
-      // options.headers['X-User-ID'] = authService.userId;
+    if (authService.isAuthenticated) {
+      options.headers['X-User-ID'] = authService.userId;
     }
 
     super.onRequest(options, handler);

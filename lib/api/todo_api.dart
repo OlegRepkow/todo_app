@@ -14,12 +14,12 @@ abstract class TodoApi {
   @GET("/todos/{id}")
   Future<Todo> getTodo(@Path("id") String id);
 
-  @POST("/todos")
+  @POST("/todos/create")
   Future<Todo> createTodo(@Body() Todo todo);
 
-  @PUT("/todos/{id}")
+  @PUT("/todos/update/{id}")
   Future<Todo> updateTodo(@Path("id") String id, @Body() Todo todo);
 
-  @DELETE("/todos/{id}")
+  @DELETE("/todos/delete/{id}")
   Future<void> deleteTodo(@Path("id") String id);
 }

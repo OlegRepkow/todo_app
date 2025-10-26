@@ -1,24 +1,22 @@
 import 'package:flutter/foundation.dart';
+import 'storage_service.dart';
 
 class AuthService extends ChangeNotifier {
-  static const String _userIdKey = 'user_id';
+  final StorageService _storage;
 
-  // final SharedPreferences _prefs;
+  AuthService(this._storage);
 
-  AuthService(
-      // this._prefs
-      );
-
-  bool get isAuthenticated => false;
-  String? get userId => null;
+  bool get isAuthenticated => userId != null && userId!.isNotEmpty;
+  
+  String? get userId => _storage.getUserId();
 
   Future<void> login(String userId) async {
-    // await _prefs.setString(_userIdKey, userId);
+    await _storage.saveUserId(userId);
     notifyListeners();
   }
 
   Future<void> logout() async {
-    // await _prefs.remove(_userIdKey);
+    await _storage.deleteUserId();
     notifyListeners();
   }
 }

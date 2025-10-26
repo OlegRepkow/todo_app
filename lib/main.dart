@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/providers/todo_provider.dart';
 import 'services/di_container.dart';
 import 'services/auth_service.dart';
 import 'api/todo_api.dart';
@@ -21,13 +22,15 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: DIContainer.instance.authService),
         Provider.value(value: DIContainer.instance.todoApi),
+        ChangeNotifierProvider(
+            create: (context) => TodoProvider(context.read<TodoApi>())),
       ],
       child: MaterialApp(
         title: 'Todo App',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: Consumer<AuthService>(
           builder: (context, auth, _) {
-            return true ? TodoListScreen() : LoginScreen();
+            return auth.isAuthenticated ? const TodoListScreen() : LoginScreen();
           },
         ),
       ),
