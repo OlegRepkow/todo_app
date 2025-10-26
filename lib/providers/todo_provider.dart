@@ -15,13 +15,14 @@ class TodoProvider extends ChangeNotifier {
   Future<void> loadTodos() async {
     _loading = true;
     notifyListeners();
-    
+
     try {
       _todos = await _api.getTodos();
+      print('Todos: $_todos');
     } catch (e) {
       print('Error loading todos: $e');
     }
-    
+
     _loading = false;
     notifyListeners();
   }
@@ -39,9 +40,9 @@ class TodoProvider extends ChangeNotifier {
 
   Future<void> toggleTodo(Todo todo) async {
     try {
-      final updated = todo.copyWith(completed: !todo.completed);
+      final updated = todo.copyWith(isCompleted: !todo.isCompleted);
       await _api.updateTodo(todo.id!, updated);
-      
+
       final index = _todos.indexWhere((t) => t.id == todo.id);
       if (index != -1) {
         _todos[index] = updated;

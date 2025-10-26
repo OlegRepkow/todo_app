@@ -9,10 +9,12 @@ import 'screens/todo_list_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DIContainer.instance.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: Colors.blue),
         home: Consumer<AuthService>(
           builder: (context, auth, _) {
-            return auth.isAuthenticated ? TodoListScreen() : LoginScreen();
+            return true ? TodoListScreen() : LoginScreen();
           },
         ),
       ),

@@ -4,10 +4,11 @@ part 'todo.g.dart';
 
 @JsonSerializable()
 class Todo {
-  final int? id;
+  final String? id;
   final String title;
   final String? description;
-  final bool completed;
+  @JsonKey(name: 'is_completed')
+  final bool isCompleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -15,7 +16,7 @@ class Todo {
     this.id,
     required this.title,
     this.description,
-    this.completed = false,
+    this.isCompleted = false,
     this.createdAt,
     this.updatedAt,
   });
@@ -24,10 +25,10 @@ class Todo {
   Map<String, dynamic> toJson() => _$TodoToJson(this);
 
   Todo copyWith({
-    int? id,
+    String? id,
     String? title,
     String? description,
-    bool? completed,
+    bool? isCompleted,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -35,7 +36,7 @@ class Todo {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      completed: completed ?? this.completed,
+      isCompleted: isCompleted ?? this.isCompleted,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

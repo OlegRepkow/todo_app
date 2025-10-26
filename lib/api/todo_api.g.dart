@@ -14,7 +14,7 @@ class _TodoApi implements TodoApi {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://jsonplaceholder.typicode.com';
+    baseUrl ??= 'https://repkow.up.railway.app/api/';
   }
 
   final Dio _dio;
@@ -59,7 +59,7 @@ class _TodoApi implements TodoApi {
   }
 
   @override
-  Future<Todo> getTodo(int id) async {
+  Future<Todo> getTodo(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -127,7 +127,7 @@ class _TodoApi implements TodoApi {
 
   @override
   Future<Todo> updateTodo(
-    int id,
+    String id,
     Todo todo,
   ) async {
     final _extra = <String, dynamic>{};
@@ -163,7 +163,7 @@ class _TodoApi implements TodoApi {
   }
 
   @override
-  Future<void> deleteTodo(int id) async {
+  Future<void> deleteTodo(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

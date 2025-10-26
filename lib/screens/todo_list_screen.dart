@@ -5,16 +5,18 @@ import '../api/todo_api.dart';
 import '../providers/todo_provider.dart';
 
 class TodoListScreen extends StatelessWidget {
+  const TodoListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => TodoProvider(context.read<TodoApi>())..loadTodos(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Todos'),
+          title: const Text('Todos'),
           actions: [
             IconButton(
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
               onPressed: () => context.read<AuthService>().logout(),
             ),
           ],
@@ -22,21 +24,22 @@ class TodoListScreen extends StatelessWidget {
         body: Consumer<TodoProvider>(
           builder: (context, provider, _) {
             if (provider.loading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
-            
+
             return ListView.builder(
               itemCount: provider.todos.length,
               itemBuilder: (context, index) {
                 final todo = provider.todos[index];
                 return ListTile(
                   title: Text(todo.title),
+                  subtitle: Text(todo.description ?? ''),
                   leading: Checkbox(
-                    value: todo.completed,
+                    value: todo.isCompleted,
                     onChanged: (_) => provider.toggleTodo(todo),
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     onPressed: () => provider.deleteTodo(todo),
                   ),
                 );
@@ -46,7 +49,7 @@ class TodoListScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showAddDialog(context),
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -54,19 +57,19 @@ class TodoListScreen extends StatelessWidget {
 
   void _showAddDialog(BuildContext context) {
     final controller = TextEditingController();
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Todo'),
+        title: const Text('Add Todo'),
         content: TextField(
           controller: controller,
-          decoration: InputDecoration(hintText: 'Enter todo title'),
+          decoration: const InputDecoration(hintText: 'Enter todo title'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -75,7 +78,7 @@ class TodoListScreen extends StatelessWidget {
                 Navigator.pop(context);
               }
             },
-            child: Text('Add'),
+            child: const Text('Add'),
           ),
         ],
       ),
