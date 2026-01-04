@@ -4,7 +4,7 @@ import '../models/todo.dart';
 
 part 'todo_api.g.dart';
 
-@RestApi(baseUrl: "https://repkow.up.railway.app/api/")
+@RestApi(baseUrl: "https://todo-backend-byzk.onrender.com/api/")
 abstract class TodoApi {
   factory TodoApi(Dio dio, {String baseUrl}) = _TodoApi;
 

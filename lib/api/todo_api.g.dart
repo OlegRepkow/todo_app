@@ -14,7 +14,7 @@ class _TodoApi implements TodoApi {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://repkow.up.railway.app/api/';
+    baseUrl ??= 'https://todo-backend-byzk.onrender.com/api/';
   }
 
   final Dio _dio;

@@ -18,24 +18,17 @@ class TodoProvider extends ChangeNotifier {
 
     try {
       _todos = await _api.getTodos();
-      print('Todos: $_todos');
-    } catch (e) {
-      print('Error loading todos: $e');
-    }
-
+    } catch (_) {}
     _loading = false;
     notifyListeners();
   }
 
-  Future<void> addTodo(String title) async {
+  Future<void> addTodo(Todo todo) async {
     try {
-      final todo = Todo(title: title);
       final created = await _api.createTodo(todo);
       _todos.insert(0, created);
       notifyListeners();
-    } catch (e) {
-      print('Error adding todo: $e');
-    }
+    } catch (_) {}
   }
 
   Future<void> toggleTodo(Todo todo) async {
@@ -48,9 +41,7 @@ class TodoProvider extends ChangeNotifier {
         _todos[index] = updated;
         notifyListeners();
       }
-    } catch (e) {
-      print('Error updating todo: $e');
-    }
+    } catch (_) {}
   }
 
   Future<void> deleteTodo(Todo todo) async {
@@ -58,8 +49,6 @@ class TodoProvider extends ChangeNotifier {
       await _api.deleteTodo(todo.id ?? '');
       _todos.removeWhere((t) => t.id == todo.id);
       notifyListeners();
-    } catch (e) {
-      print('Error deleting todo: $e');
-    }
+    } catch (_) {}
   }
 }
