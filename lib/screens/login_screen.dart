@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
+import '../themes/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,17 +16,18 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+    final colors = theme.appColors;
+
     return Scaffold(
+      backgroundColor: colors.background,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              theme.colorScheme.primary,
-              theme.colorScheme.secondary,
-              theme.colorScheme.tertiary,
+              colors.primary,
+              colors.primary.withValues(alpha: 0.8),
             ],
           ),
         ),
@@ -38,11 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
+                    color: colors.surface,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
+                        color: colors.todoCardShadow,
                         blurRadius: 32,
                         offset: const Offset(0, 16),
                       ),
@@ -51,33 +53,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Icon(
                     Icons.check_circle_outline,
                     size: 80,
-                    color: theme.colorScheme.primary,
+                    color: colors.primary,
                   ),
                 ),
                 const SizedBox(height: 40),
                 Text(
                   'Todo App',
-                  style: theme.textTheme.headlineLarge?.copyWith(
+                  style: TextStyle(
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onPrimary,
+                    color: colors.onPrimary,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Організуйте свої завдання',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: theme.colorScheme.onPrimary.withValues(alpha: 0.8),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: colors.onPrimary.withValues(alpha: 0.8),
                   ),
                 ),
                 const SizedBox(height: 48),
                 Container(
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
+                    color: colors.surface,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
+                        color: colors.todoCardShadow,
                         blurRadius: 32,
                         offset: const Offset(0, 16),
                       ),
@@ -87,11 +91,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextField(
                         controller: _controller,
+                        style: TextStyle(color: colors.onSurface),
                         decoration: InputDecoration(
                           labelText: 'User ID',
+                          labelStyle: TextStyle(
+                              color: colors.onSurface.withValues(alpha: 0.7)),
                           prefixIcon: Icon(
                             Icons.person,
-                            color: theme.colorScheme.primary,
+                            color: colors.primary,
+                          ),
+                          filled: true,
+                          fillColor: colors.inputFillColor,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide.none,
                           ),
                         ),
                       ),
@@ -99,6 +112,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: colors.primary,
+                            foregroundColor: colors.onPrimary,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
                           onPressed: () async {
                             if (_controller.text.isNotEmpty) {
                               await context
