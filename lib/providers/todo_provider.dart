@@ -18,6 +18,7 @@ class TodoProvider extends ChangeNotifier {
 
     try {
       _todos = await _api.getTodos();
+      await Future.delayed(const Duration(seconds: 1), () {});
     } catch (_) {}
     _loading = false;
     notifyListeners();
@@ -28,7 +29,9 @@ class TodoProvider extends ChangeNotifier {
       final created = await _api.createTodo(todo);
       _todos.insert(0, created);
       notifyListeners();
-    } catch (_) {}
+    } catch (error) {
+      throw Exception('Failed to add todo');
+    }
   }
 
   Future<void> toggleTodo(Todo todo) async {

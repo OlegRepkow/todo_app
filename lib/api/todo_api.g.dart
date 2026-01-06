@@ -14,7 +14,7 @@ class _TodoApi implements TodoApi {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://todo-backend-byzk.onrender.com/api/';
+    baseUrl ??= 'http://0.0.0.0:8080/api/';
   }
 
   final Dio _dio;
@@ -84,6 +84,39 @@ class _TodoApi implements TodoApi {
     late Todo _value;
     try {
       _value = Todo.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<AppColorsModel> getTheme() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<AppColorsModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/theme',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AppColorsModel _value;
+    try {
+      _value = AppColorsModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

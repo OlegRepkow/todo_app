@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../models/todo.dart';
+import '../models/app_colors_model.dart';
 
 part 'todo_api.g.dart';
 
-@RestApi(baseUrl: "https://todo-backend-byzk.onrender.com/api/")
+@RestApi(baseUrl: "http://0.0.0.0:8080/api/")
 abstract class TodoApi {
   factory TodoApi(Dio dio, {String baseUrl}) = _TodoApi;
 
@@ -13,6 +14,9 @@ abstract class TodoApi {
 
   @GET("/todos/{id}")
   Future<Todo> getTodo(@Path("id") String id);
+
+  @GET("/theme")
+  Future<AppColorsModel> getTheme();
 
   @POST("/todos/create")
   Future<Todo> createTodo(@Body() Todo todo);
